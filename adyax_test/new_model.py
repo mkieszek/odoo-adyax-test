@@ -36,3 +36,17 @@ class new_model(osv.Model):
     #point 2
     _sql_constraints = [('model_unique','unique(partner_id,date)','This model already exists.')]
     
+    def name_get(self, cr, uid, ids, context=None):
+         """Overrides orm name_get method"""
+         if not isinstance(ids, list) :
+             ids = [ids]
+         res = []
+         if not ids:
+             return res
+        
+         reads = self.read(cr, uid, ids, ['partner_id', 'date'], context)
+         for record in reads:
+             partner = record['partner_id'][1]
+             date = record['date']
+             res.append((record['id'], partner + ' - ' + date))
+         return res
