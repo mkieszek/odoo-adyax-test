@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    	<!-- point 3. list of all objects -->
+		<record model="ir.ui.view" id="new_model_tree">
+           	<field name="name">New model Tree</field>
+			<field name="model">new.model</field>
+            <field name="arch" type="xml">
+				<tree string="All models">
+                	<field name="numeric_value" />
+                	<field name="partner_id" />
+                	<field name="sum_value" />
+                	<field name="date" />
+				</tree>
+			</field>
+		</record>
+		<!-- point 3. - form view -->
+		<record model="ir.ui.view" id="new_model_form">
+           	<field name="name">New model Form</field>
+			<field name="model">new.model</field>
+            <field name="arch" type="xml">
+            	<form string="New model" version="7.0" >
+            		<sheet>
+            			<group col="2">
+            				<group>
+            					<field name="numeric_value" />
+			                	<field name="partner_id" />
+			                	<field name="sum_value" />
+			                	<field name="date" />
+	            			</group>
+	            			<group>
+	            			</group>
+            			</group>
+            		</sheet>
+            	</form>
+			</field>
+		</record>
+		
+		<record id="action_viait_district" model="ir.actions.act_window">
+             <field name="name">New model</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="res_model">new.model</field>
+             <field name="view_id" ref="new_model_tree"/>
+             <field name="view_mode">form,tree</field>
+             <field name="context">{}</field>
+             <field name="domain">[]</field>
+        </record>
+        
+        <menuitem name="Adyax" id="menu_adyax" sequence="100"/>
+		<menuitem name="Views" id="menu_adyax_views" parent="menu_adyax" sequence="10"/>
+        <menuitem name="New model" id="menu_adyax_views_new_model" action="action_viait_district" parent="menu_adyax_views" sequence="10"/>
+	        
+    </data>
+</openerp>
