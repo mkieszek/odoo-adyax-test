@@ -27,26 +27,26 @@ class new_model(osv.Model):
      
      
     _columns = {
-        'numeric_value': fields.float('Numeric value'), #point 1.1
-        'partner_id': fields.many2one('res.partner', 'Partner'), #point 1.2
+        'numeric_value': fields.float('Numeric value', ), #point 1.1
+        'partner_id': fields.many2one('res.partner', 'Partner', required=True), #point 1.2
         'sum_value': fields.function(_get_sum_value, type="float", string="Sum value"), #point 1.3
-        'date':  fields.date('Date') #point 1.4
+        'date':  fields.date('Date', required=True) #point 1.4
          }
     
     #point 2
     _sql_constraints = [('model_unique','unique(partner_id,date)','This model already exists.')]
     
     def name_get(self, cr, uid, ids, context=None):
-         """Overrides orm name_get method"""
-         if not isinstance(ids, list) :
-             ids = [ids]
-         res = []
-         if not ids:
-             return res
+        """Overrides orm name_get method"""
+        if not isinstance(ids, list) :
+            ids = [ids]
+        res = []
+        if not ids:
+            return res
         
-         reads = self.read(cr, uid, ids, ['partner_id', 'date'], context)
-         for record in reads:
-             partner = record['partner_id'][1]
-             date = record['date']
-             res.append((record['id'], partner + ' - ' + date))
-         return res
+        reads = self.read(cr, uid, ids, ['partner_id', 'date'], context)
+        for record in reads:
+            partner = record['partner_id'][1]
+            date = record['date']
+            res.append((record['id'], partner + ' - ' + date))
+        return res
